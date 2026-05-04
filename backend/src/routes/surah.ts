@@ -28,9 +28,11 @@ router.get("/", async (req: Request, res: Response) => {
     }
 });
 
+// GET /api/surah/:number — get surah with ayahs + translations + audio
 router.get("/:number", async (req: Request, res: Response) => {
     const { number } = req.params;
     try {
+        // Fetch Arabic text and English translation in parallel
         const [arabicRes, translationsRes] = await Promise.all([
             axios.get<ApiSurahResponse>(`${QURAN_API}/surah/${number}`),
             axios.get<ApiSurahResponse>(
